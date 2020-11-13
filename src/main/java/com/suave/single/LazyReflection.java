@@ -1,7 +1,7 @@
 package com.suave.single;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
 
 /**
  * 使用反射破坏懒汉式单例模式
@@ -44,8 +44,8 @@ public class LazyReflection {
      */
     public static LazyReflection getInstance() {
         if (lazyReflection == null) {
-            synchronized (LazyReflection.class){
-                if (lazyReflection == null){
+            synchronized (LazyReflection.class) {
+                if (lazyReflection == null) {
                     lazyReflection = new LazyReflection();
                 }
             }
@@ -53,10 +53,13 @@ public class LazyReflection {
         return lazyReflection;
     }
 
-    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void main(String[] args) throws Exception {
 //        LazyReflection instance1 = getInstance();
         Constructor<LazyReflection> constructor = LazyReflection.class.getDeclaredConstructor();
         LazyReflection instance1 = constructor.newInstance();
+        Field flag = LazyReflection.class.getDeclaredField("flag");
+        flag.setAccessible(true);
+        flag.set(instance1, false);
         LazyReflection instance2 = constructor.newInstance();
         System.out.println(instance1);
         System.out.println(instance2);
