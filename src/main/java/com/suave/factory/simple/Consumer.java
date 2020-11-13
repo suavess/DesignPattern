@@ -1,6 +1,8 @@
 package com.suave.factory.simple;
 
 /**
+ * 简单工厂模式从某种程度上不符合设计原则
+ * 但是各方面都优于工厂方法模式
  * @author Suave
  * @date 2020/11/13 09:15
  */
